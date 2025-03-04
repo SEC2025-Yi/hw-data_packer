@@ -16,6 +16,12 @@ module ShortStringPacker
   #   packed - a Integer object
   # Returns: a String object
   def self.unpack(packed)
-    # IMPLEMENT THIS METHOD
+    chrs = packed.bit_length.ceildiv(5).times.map do |pos|
+      elem = packed >> (pos * 5) & 0b11111
+      (elem + 'a'.ord - 1).chr
+    end
+
+    # The characters on the right are stored at LSB, so we need to reverse it
+    chrs.reverse.join
   end
 end
